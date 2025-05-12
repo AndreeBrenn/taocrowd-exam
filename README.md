@@ -5,12 +5,11 @@ What the app should do:
 - Apply infinite scrolling. :white_check_mark:
 - Display fetched data in a scrollable view that lazy loads more data when scrolled down. :white_check_mark:
 - Display loading component at the bottom of the list on every lazy load. :white_check_mark:
-- Show message when no more data fetched. :white_check_mark: 
+- Show message when no more data fetched. :white_check_mark:
 - Integrate basic search feature. :white_check_mark:
 
 ---
 
-Sorry for I didn't use the enviroment that provided, I try to use it but most of the dependencies are deprecated so I use Vite React
+Sorry for I didn't use the environment that provided, I try to use it but most of the dependencies are deprecated so I use Vite React
 
 for CSS I use TailwindCSS and I for fetch I use axios other libraries.
-
