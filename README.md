@@ -1,12 +1,16 @@
-# React + Vite
+What the app should do:
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- Display a loading component. :white_check_mark:
+- Fetch data from the provided api. :white_check_mark:
+- Apply infinite scrolling. :white_check_mark:
+- Display fetched data in a scrollable view that lazy loads more data when scrolled down. :white_check_mark:
+- Display loading component at the bottom of the list on every lazy load. :white_check_mark:
+- Show message when no more data fetched. :white_check_mark: 
+- Integrate basic search feature. :white_check_mark:
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Sorry for I didn't use the enviroment that provided, I try to use it but most of the dependencies are deprecated so I use Vite React
 
-## Expanding the ESLint configuration
+for CSS I use TailwindCSS and I for fetch I use axios other libraries.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
