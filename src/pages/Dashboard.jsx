@@ -84,7 +84,10 @@ const Dashboard = () => {
       />
       {launches
         .filter((fil) =>
-          fil.mission_name.toString().toLowerCase().includes(searchData)
+          fil.mission_name
+            .toString()
+            .toLowerCase()
+            .includes(searchData.toString().toLowerCase())
         )
         .map((item) => (
           <LaunchCard
