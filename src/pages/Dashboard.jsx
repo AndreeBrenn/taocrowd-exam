@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
 import LaunchCard from "../components/LaunchCard";
 import { TotalCount } from "../function/TotalCount";
+import { AnimatePresence } from "framer-motion";
 
 const Dashboard = () => {
   const [launches, setLaunches] = useState([]);
@@ -27,23 +28,37 @@ const Dashboard = () => {
     const observer = new IntersectionObserver(
       (entries) => {
         const [entry] = entries;
-        if (entry.isIntersecting && !loading) {
+
+        if (entry.isIntersecting && !loading && searchData == "") {
           loadMore();
         }
       },
-      { threshold: 1.0 }
+      {
+        threshold: 0.1,
+        rootMargin: "100px",
+      }
     );
 
-    if (loaderRef.current) {
-      observer.observe(loaderRef.current);
-    }
+    const timer = setTimeout(() => {
+      if (loaderRef.current) {
+        observer.observe(loaderRef.current);
+
+        const rect = loaderRef.current.getBoundingClientRect();
+        const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+
+        if (isVisible && !loading) {
+          loadMore();
+        }
+      }
+    }, 100);
 
     return () => {
+      clearTimeout(timer);
       if (loaderRef.current) {
         observer.unobserve(loaderRef.current);
       }
     };
-  }, [loading, count]);
+  }, [loading, count, loadMore]);
 
   useEffect(() => {
     let isMounted = true;
@@ -53,7 +68,9 @@ const Dashboard = () => {
     const getLaunches = async () => {
       try {
         const res = await axios.get(
-          `https://api.spacexdata.com/v3/launches?limit=${limit}`,
+          searchData != ""
+            ? "https://api.spacexdata.com/v3/launches"
+            : `https://api.spacexdata.com/v3/launches?limit=${limit}`,
           {
             signal: controller.signal,
           }
@@ -61,7 +78,7 @@ const Dashboard = () => {
 
         setLaunches(res.data);
       } catch (error) {
-        alert("Something went wrong");
+        console.log(error);
       } finally {
         setLoading(false);
       }
@@ -76,26 +93,28 @@ const Dashboard = () => {
   }, [limit]);
 
   return (
-    <div className="w-full  justify-center items-center flex flex-col p-3">
+    <div className="w-full relative  justify-center items-center flex flex-col p-3">
       <input
         onChange={(e) => setSearchData(e.target.value)}
-        className="max-w-[60rem] min-w-[30rem] border border-gray-500 p-2"
+        className="max-w-[60rem] min-w-[30rem] border border-gray-500 p-2 sticky top-0"
         placeholder="search..."
       />
-      {launches
-        .filter((fil) =>
-          fil.mission_name
-            .toString()
-            .toLowerCase()
-            .includes(searchData.toString().toLowerCase())
-        )
-        .map((item) => (
-          <LaunchCard
-            item={item}
-            setToggleView={setToggleView}
-            toggleView={toggleView}
-          />
-        ))}
+      <AnimatePresence>
+        {launches
+          .filter((fil) =>
+            fil.mission_name
+              .toString()
+              .toLowerCase()
+              .includes(searchData.toString().toLowerCase())
+          )
+          .map((item) => (
+            <LaunchCard
+              item={item}
+              setToggleView={setToggleView}
+              toggleView={toggleView}
+            />
+          ))}
+      </AnimatePresence>
 
       <div ref={loaderRef} className="py-4 text-center">
         {loading ? (

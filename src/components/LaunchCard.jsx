@@ -1,9 +1,17 @@
 import React from "react";
 import TimeAgo from "timeago-react";
+import { motion } from "framer-motion";
 
 const LaunchCard = ({ item, setToggleView, toggleView }) => {
   return (
-    <div className="max-w-[30rem] flex flex-col min-w-[30rem] shadow-sm shadow-gray-400 p-2 my-3 rounded-md">
+    <motion.div
+      key={item.flight_id}
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 10 }}
+      transition={{ duration: 0.3 }}
+      className="max-w-[30rem] flex flex-col min-w-[30rem] shadow-sm shadow-gray-400 p-2 my-3 rounded-md"
+    >
       <div className="flex">
         <span className="font-bold text-[1.3rem]">{item.mission_name}</span>
         <span
@@ -76,7 +84,7 @@ const LaunchCard = ({ item, setToggleView, toggleView }) => {
       >
         {toggleView[item.flight_number] ? "HIDE" : "VIEW"}
       </button>
-    </div>
+    </motion.div>
   );
 };
 
