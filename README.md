@@ -13,3 +13,5 @@ What the app should do:
 Sorry for I didn't use the environment that provided, I try to use it but most of the dependencies are deprecated so I use Vite React
 
 for CSS I use TailwindCSS and I for fetch I use axios other libraries.
+
+for image most of the images not working anymore so I add onError that it loads the image in the public folder instead.
